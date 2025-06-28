@@ -7,7 +7,8 @@ A set of classes and tools providing basic functionality useful in PyQt applicat
 Install PyQt-Utils through pip from git:
 
 ```sh
-pip install git@github.com/TheCheese42/pyqt-utils[dev-tools]
+pip install "pyqt-utils[dev-tools] @ git+https://github.com/TheCheese42/pyqt-utils.git"
+
 ```
 
 Appending `[dev-tools]` also installs `qt6-tools`, allowing the `pyqt-utils` script to work.
