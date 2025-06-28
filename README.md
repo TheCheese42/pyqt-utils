@@ -2,6 +2,16 @@
 
 A set of classes and tools providing basic functionality useful in PyQt applications.
 
+## Installation
+
+Install PyQt-Utils through pip from git:
+
+```sh
+pip install git@github.com/TheCheese42/pyqt-utils[dev-tools]
+```
+
+Appending `[dev-tools]` also installs `qt6-tools`, allowing the `pyqt-utils` script to work.
+
 ## Initialization
 
 Before importing anything else you must initialize PyQt-Utils.
@@ -31,12 +41,12 @@ print(f"{__version__} | {version_string}")
 
 ### Bump the Version
 
-To increase the version number, use the bump_version.py script that was installed to your virtual environment.
+To increase the version number, use the `bump-version` script that was installed to your virtual environment.
 
 ```sh
-python bump_version.py <package> --major
-python bump_version.py <package> --minor
-python bump_version.py <package> --patch
+python bump-version <package> --major
+python bump-version <package> --minor
+python bump-version <package> --patch
 ```
 
 `<package>` must be replaced with the path to the python package containing the `version.txt` file.
@@ -152,11 +162,22 @@ def open_licenses() -> None:
 
 ## Scripts
 
-All script except for bump_version.py must be run from the main package directory.
-Every shell script has a bash and a PowerShell version, only the file extension changes from `.sh` to `.ps1`.
-The following scripts were installed to your virtual environment:
+Besides the `bump-version` script, there's also the `pyqt-utils` script that can do multiple things at once.
 
-- bump_version.py (see section "Version")
-- compile-ui.sh - Compile all `.ui` files in the `ui/` directory
-- compile-icons.sh - Compile all icons from the `icons/` directory into the `icons/resource.py` resource file
-- compile-langs.sh - Compile all `.ts` files from the `langs/` directory into `.qm` files.
+```sh
+# Compiles the package/ui/ contents to .py files
+pyqt-utils <package> --compile-ui
+
+# Compiles the package/icons/icons.qrc to package/icons/resource.py
+pyqt-utils <package> --compile-icons
+
+# Update the .ts files in the package/langs/ directory with the contents
+# of the package/ui/*.ui files and optional .py files passed via --lupdate-file
+pyqt-utils <package> --update-langs  --lupdate-file gui.py --lupdate-file other.py
+
+# Compile the .ts files in package/langs to .qm files
+pyqt-utils <package> --compile-langs
+
+# See also:
+pyqt-utils --help
+```
