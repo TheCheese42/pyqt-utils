@@ -53,7 +53,7 @@ def find_licenses() -> list[License]:
             content = (item.parent / content_file).read_text(encoding="utf-8")
             link = str(meta.get("link", ""))
             licenses.append(License(name=name, content=content, link=link))
-    return licenses
+    return sorted(licenses, key=lambda x: x.name)
 
 
 class LicenseViewer(QDialog):
