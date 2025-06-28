@@ -3,7 +3,7 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "pyqt-tools"
+name = "pyqt-utils"
 version = "0.1.0"
 authors = [{ name = "Dominik Reinartz", email = "dominik.reinartz@proton.me" }]
 description = "A set of classes and tools providing basic functionality useful in PyQt applications."
