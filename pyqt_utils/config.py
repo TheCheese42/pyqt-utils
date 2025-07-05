@@ -95,9 +95,7 @@ def get_config_value(key: str) -> Any:
     return val
 
 
-def set_config_value(
-    key: str, value: str | int | float | bool | list[str]
-) -> None:
+def set_config_value(key: str, value: Any) -> None:
     config = _get_config()
     config[key] = value
     _overwrite_config(config)
