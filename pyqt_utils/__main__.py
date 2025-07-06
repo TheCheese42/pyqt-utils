@@ -12,7 +12,7 @@ def _find_executable(name: str) -> str:
     for item in path.rglob(name):
         if item.is_file():
             return str(item.resolve())
-    raise FileNotFoundError(f"Executable '{name}' not found.")
+    return name
 
 
 def main() -> None:
