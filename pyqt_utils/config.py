@@ -46,8 +46,6 @@ def init_config(
     :type create_lib_dir: bool, optional
     """
     global _default_config
-    log(f"{app_name} - Version {version_string}")
-    log(f"Running on {platform.platform()}")
     _default_config = default_config
     CONFIG_DIR.mkdir(parents=True, exist_ok=True)
     if create_lib_dir:
@@ -57,6 +55,9 @@ def init_config(
     if not config_exists():
         with open(CONFIG_PATH, "w", encoding="utf-8") as fp:
             json.dump(default_config, fp)
+
+    log(f"{app_name} - Version {version_string}")
+    log(f"Running on {platform.platform()}")
 
 
 def _get_config() -> dict[str, Any]:
