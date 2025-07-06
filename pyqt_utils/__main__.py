@@ -213,16 +213,14 @@ def main() -> None:
         build_command += f"--include-data-dir=\"{package}/licenses/=licenses/\" "  # noqa
     if (package / "version.txt").exists():
         build_command += f"--include-data-file=\"{package}/version.txt=version.txt\" "  # noqa
-        build_command += f"--product-version=\"$(cat {package}/version.txt)\" "
-        build_command += f"--file-version=\"$(cat {package}/version.txt)\" "
+        build_command += f"--product-version=\"{(package / "version.txt").read_text("utf-8")}\" "  # noqa
+        build_command += f"--file-version=\"{(package / "version.txt").read_text("utf-8")}\" "  # noqa
     if args.product_name:
         build_command += f"--product-name=\"{args.product_name}\" "
     for data_dir in args.data_dirs or []:
         build_command += f"--include-data-dir=\"{data_dir}\" "
     for data_file in args.data_files or []:
         build_command += f"--include-data-file=\"{data_file}\" "
-    if platform.system() == "Windows":
-        build_command = build_command.replace("cat", "Get-Content")
 
     if args.build_linux:
         command = build_command
