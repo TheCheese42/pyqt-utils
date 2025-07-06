@@ -190,6 +190,7 @@ def main() -> None:
 
     build_command = dedent(
         f"""nuitka \
+        --assume-yes-for-downloads \
         --standalone \
         --onefile \
         --python-flag="no_asserts" \
