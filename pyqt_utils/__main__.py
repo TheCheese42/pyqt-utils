@@ -218,21 +218,23 @@ def main() -> None:
     if args.product_name:
         build_command += f"--product-name=\"{args.product_name}\" "
     for data_dir in args.data_dirs or []:
+        data_dir = Path(data_dir).absolute().resolve()
         build_command += f"--include-data-dir=\"{data_dir}\" "
     for data_file in args.data_files or []:
+        data_file = Path(data_file).absolute().resolve()
         build_command += f"--include-data-file=\"{data_file}\" "
 
     if args.build_linux:
         command = build_command
         if args.icon_path:
-            command += f"--linux-icon=\"{args.icon_path}\" "
+            command += f"--linux-icon=\"{Path(args.icon_path).absolute().resolve()}\" "  # noqa
         print(os.system(command), end="")
 
     if args.build_windows:
         command = build_command
         command += "--windows-console-mode=\"attach\" "
         if args.icon_path:
-            command += f"--windows-icon-from-ico=\"{args.icon_path}\" "
+            command += f"--windows-icon-from-ico=\"{Path(args.icon_path).absolute().resolve()}\" "  # noqa
         print(os.system(command), end="")
 
     if args.build_macos:
@@ -240,5 +242,5 @@ def main() -> None:
         if args.product_name:
             command += f"--macos-app-name=\"{args.product_name}\" "
         if args.icon_path:
-            command += f"--macos-app-icon=\"{args.icon_path}\" "
+            command += f"--macos-app-icon=\"{Path(args.icon_path).absolute().resolve()}\" "  # noqa
         print(os.system(command), end="")
