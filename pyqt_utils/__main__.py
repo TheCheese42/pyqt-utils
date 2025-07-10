@@ -138,23 +138,17 @@ def main() -> None:
         for ui_file in package.rglob("ui/*.ui"):
             if not ui_file.is_file():
                 continue
-            print(
-                os.system(
-                    f"{_find_executable("pyuic6")} {ui_file} -o "
-                    f"{ui_file.with_suffix('.py').with_stem(
-                        ui_file.stem + "_ui"
-                    )}"
-                ),
-                end="",
+            os.system(
+                f"{_find_executable("pyuic6")} {ui_file} -o "
+                f"{ui_file.with_suffix('.py').with_stem(
+                    ui_file.stem + "_ui"
+                )}"
             )
 
     if args.compile_icons:
-        print(
-            os.system(
-                f"rcc --generator python {package}/icons/icons.qrc -o "
-                f"{package}/icons/resource.py"
-            ),
-            end="",
+        os.system(
+            f"rcc --generator python {package}/icons/icons.qrc -o "
+            f"{package}/icons/resource.py"
         )
         resource_file = Path(package) / "icons" / "resource.py"
         resource_file.write_text(
@@ -166,27 +160,20 @@ def main() -> None:
         lupdate_files = (
             " ".join(args.lupdate_files) if args.lupdate_files else ""
         )
-        print(lupdate_files)
         for ts_file in package.rglob("langs/*.ts"):
             if not ts_file.is_file():
                 continue
-            print(
-                os.system(
-                    f"{_find_executable("lupdate")} -tr-function-alias "
-                    f"translate=tr {lupdate_files} {package}/ui/ -ts "
-                    f"{ts_file} -no-obsolete -source-language en_US"
-                ),
-                end="",
+            os.system(
+                f"{_find_executable("lupdate")} -tr-function-alias "
+                f"translate=tr {lupdate_files} {package}/ui/ -ts "
+                f"{ts_file} -no-obsolete -source-language en_US"
             )
 
     if args.compile_langs:
         for ts_file in package.rglob("langs/*.ts"):
             if not ts_file.is_file():
                 continue
-            print(
-                os.system(f"{_find_executable("lrelease")} {ts_file}"),
-                end="",
-            )
+            os.system(f"{_find_executable("lrelease")} {ts_file}")
 
     build_command = dedent(
         f"""nuitka \
@@ -229,14 +216,14 @@ def main() -> None:
         command = build_command
         if args.icon_path:
             command += f"--linux-icon=\"{Path(args.icon_path).absolute().resolve()}\" "  # noqa
-        print(os.system(command), end="")
+        os.system(command)
 
     if args.build_windows:
         command = build_command
         command += "--windows-console-mode=\"attach\" "
         if args.icon_path:
             command += f"--windows-icon-from-ico=\"{Path(args.icon_path).absolute().resolve()}\" "  # noqa
-        print(os.system(command), end="")
+        os.system(command)
 
     if args.build_macos:
         command = build_command
@@ -244,4 +231,4 @@ def main() -> None:
             command += f"--macos-app-name=\"{args.product_name}\" "
         if args.icon_path:
             command += f"--macos-app-icon=\"{Path(args.icon_path).absolute().resolve()}\" "  # noqa
-        print(os.system(command), end="")
+        os.system(command)
