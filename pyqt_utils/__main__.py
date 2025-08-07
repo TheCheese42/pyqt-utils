@@ -147,7 +147,8 @@ def main() -> None:
 
     if args.compile_icons:
         os.system(
-            f"rcc --generator python {package}/icons/icons.qrc -o "
+            f"{_find_executable("rcc")} --generator python "
+            f"{package}/icons/icons.qrc -o "
             f"{package}/icons/resource.py"
         )
         resource_file = Path(package) / "icons" / "resource.py"
