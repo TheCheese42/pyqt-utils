@@ -147,7 +147,8 @@ def main() -> None:
 
     if args.compile_icons:
         os.system(
-            f"{_find_executable("rcc")} --generator python "
+            # XXX f"{_find_executable("rcc")} --generator python "
+            f"{_find_executable("pyrcc5")} "
             f"{package}/icons/icons.qrc -o "
             f"{package}/icons/resource.py"
         )
