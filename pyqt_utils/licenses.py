@@ -49,8 +49,16 @@ def find_licenses() -> list[License]:
                 raise ValueError(f"License file {item} has no name.")
             content_file = str(meta.get("content_file", None))
             if content_file is None:
-                raise ValueError(f"License file {item} has no content_file.")
-            content = (item.parent / content_file).read_text(encoding="utf-8")
+                content = str(meta.get("content_text", None))
+                if content is None:
+                    raise ValueError(
+                        f"License file {item} has no content_file or "
+                        "content_text."
+                    )
+            else:
+                content = (item.parent / content_file).read_text(
+                    encoding="utf-8"
+                )
             link = str(meta.get("link", ""))
             licenses.append(License(name=name, content=content, link=link))
     return sorted(licenses, key=lambda x: x.name)
