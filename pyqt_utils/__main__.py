@@ -152,7 +152,9 @@ def main() -> None:
         )
         resource_file = Path(package) / "icons" / "resource.py"
         resource_file.write_text(
-            resource_file.read_text("utf-8").replace("PyQt5", "PyQt6"),
+            resource_file.read_text("utf-8").replace(
+                "PyQt5", "PyQt6").replace("PySide2", "PyQt6").replace(
+                    "PySide6", "PyQt6"),
             encoding="utf-8",
         )
 
